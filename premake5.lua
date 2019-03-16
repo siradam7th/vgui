@@ -64,5 +64,6 @@ workspace "vGUI"
 	include("3rdparty/build_3rdparty.lua")
 	
 	-- Build Example project
-	include("example/build_example.lua")
-	
+	if next(os.matchfiles("example/build_example.lua")) then
+		include("example/build_example.lua")
+	end
