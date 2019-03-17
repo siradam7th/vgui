@@ -8,12 +8,9 @@ namespace vgui
     class Button : public Element
     {
     public:
-        Button(u32 width, u32 height);
+        Button(vec4f rect);
         void setStyle(Style style);
     private:
-
-        u32 m_width;
-        u32 m_height;
         Style m_style;
     };
 }

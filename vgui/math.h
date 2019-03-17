@@ -6,6 +6,9 @@ namespace vgui
     template<typename T>
     class vec2
     {
+    public:
+        vec2() {}
+        vec2(T _x, T _y) : x(_x), y(_y) {}
         T x;
         T y;
     };
@@ -16,6 +19,9 @@ namespace vgui
     template<typename T>
     class vec3
     {
+    public:
+        vec3() {}
+        vec3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
         T x;
         T y;
         T z;
@@ -27,6 +33,9 @@ namespace vgui
     template<typename T>
     class vec4
     {
+    public:
+        vec4() {}
+        vec4(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w) {}
         T x;
         T y;
         T z;

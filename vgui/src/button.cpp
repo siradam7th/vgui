@@ -1,9 +1,11 @@
 #include "vgui/button.h"
+#include "vgui/graphics_device.h"
 using namespace vgui;
 
-Button::Button(u32 width, u32 height) : m_width(width), m_height(height)
+Button::Button(vec4f rect)
 {
-
+    mi_rect = rect;
+    //auto graphics_context = GraphicsDevice::getGraphicsContext();
 }
 
 
