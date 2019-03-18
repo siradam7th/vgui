@@ -27,20 +27,44 @@ bool NanovgGraphicsContext::init()
 
 void NanovgGraphicsContext::setup()
 {
+    // empty for now
+}
 
+void NanovgGraphicsContext::beginFrame(vec2f canvas_size)
+{
+    if (s_nvgContext)
+        nvgBeginFrame(s_nvgContext, canvas_size.x, canvas_size.y, 1.0f);
+}
+
+void NanovgGraphicsContext::endFrame()
+{
+    if (s_nvgContext)
+        nvgEndFrame(s_nvgContext);
 }
 
 void NanovgGraphicsContext::drawRoundedRect(float radius, vec4f rect, vec4f color)
 {
+    if (!s_nvgContext)
+        return;
 
+    nvgBeginPath(s_nvgContext);
+    nvgFillColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
+    nvgRoundedRect(s_nvgContext, rect.x, rect.y, rect.z, rect.w, radius);
+    nvgFill(s_nvgContext);
 }
 
 void NanovgGraphicsContext::drawRect(vec4f rect, vec4f color)
 {
+    if (!s_nvgContext)
+        return;
 
+    nvgBeginPath(s_nvgContext);
+    nvgFillColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
+    nvgRect(s_nvgContext, rect.x, rect.y, rect.z, rect.w);
+    nvgFill(s_nvgContext);
 }
 
 void NanovgGraphicsContext::destroy()
 {
-
+    // empty for now
 }

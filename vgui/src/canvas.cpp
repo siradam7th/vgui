@@ -1,7 +1,8 @@
 #include "vgui/canvas.h"
+#include "vgui/graphics_device.h"
 using namespace vgui;
 
-Canvas::Canvas(u32 width, u32 height) : m_width(width), m_height(height)
+Canvas::Canvas(vec2f size) : m_size(size)
 {
 
 }
@@ -18,11 +19,19 @@ void Canvas::update()
 
 void Canvas::draw()
 {
-
+    auto graphics_context = GraphicsDevice::getGraphicsContext();
+    graphics_context->beginFrame(m_size);
+    for (auto& element : m_elements)
+    {
+        if (auto& on_draw = element->getDrawEvents().on_draw)
+        {
+            on_draw();
+        }
+    }
+    graphics_context->endFrame();
 }
 
-void Canvas::resize(u32 width, u32 height)
+void Canvas::resize(vec2f size)
 {
-    m_width = width;
-    m_height = height;
+    m_size = size;
 }

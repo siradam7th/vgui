@@ -8,15 +8,13 @@ namespace vgui
     class Canvas
     {
     public:
-        Canvas(u32 width, u32 height);
+        Canvas(vec2f size);
         void addElement(SPtr<Element> element);
         void update();
         void draw();
-        void resize(u32 width, u32 height);
+        void resize(vec2f size);
     private:
-
-        u32 m_width;
-        u32 m_height;
+        vec2f m_size;
         std::vector<SPtr<Element>> m_elements;
     };
 }

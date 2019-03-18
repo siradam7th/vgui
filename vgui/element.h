@@ -10,6 +10,7 @@ namespace vgui
     public:
         void bindUIEvents(UIEvents events);
         void bindDrawEvents(DrawEvents events);
+        const DrawEvents& getDrawEvents() const;
     protected:
         vec4f mi_rect;
     private:
