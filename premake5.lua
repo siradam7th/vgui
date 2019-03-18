@@ -23,10 +23,10 @@ workspace "vGUI"
 	filter { "platforms:Windows" and "platforms:x64" }
 		defines { "PLATFORM_WIN64" }
 		
-	-- Use Windows SDK '10.0.14393.0' workaround
-	-- Replace later to support latest installed sdk version
+	-- No winsdk workaround is needed any more in the latest build of premake5
+	-- please update your premake5 to at least (premake-5.0.0-alpha13) for this functionality to work
 	filter {"system:windows", "action:vs*"}
-		systemversion("10.0.14393.0")
+		systemversion("latest")
 		
 	-- These settings will apply to the entire workspace or project (whichever is active)
 	filter {}
@@ -34,7 +34,6 @@ workspace "vGUI"
 		objdir ("build/" .. _ACTION .. "/obj")
 		-- Disable precompiled headers
 		flags { "NoPCH", "NoManifest" }
-		-- current premake5 build results in 'stdcpplatest' instead of 'stdcpp17' but was patched in master branch
 		cppdialect "C++17" 
 		characterset "Unicode"
 		
