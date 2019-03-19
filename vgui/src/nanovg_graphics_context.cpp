@@ -86,6 +86,30 @@ void NanovgGraphicsContext::strokeRectRounded(float radius, vec4f rect, vec4f co
     nvgStroke(s_nvgContext);
 }
 
+bool NanovgGraphicsContext::createFont(const std::string& path, const std::string& name)
+{
+    // note: nanovg keeps track of the loaded fonts and their name internally,so no need to duplicate that
+    if (path.empty() || name.empty())
+        return false;
+
+    int font_handle = nvgCreateFont(s_nvgContext, name.c_str(), path.c_str());
+    if (font_handle != -1)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void NanovgGraphicsContext::fillFont(const std::string& text, float font_size, const std::string& font_name, vec2f pos, vec4f color, FontStyle font_style)
+{
+    nvgFontFace(s_nvgContext, font_name.c_str());
+    nvgFontSize(s_nvgContext, font_size);
+    nvgTextAlign(s_nvgContext, NVG_ALIGN_TOP | NVG_ALIGN_LEFT);
+    nvgFillColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
+    nvgText(s_nvgContext, pos.x, pos.y + font_size * 0.5f, text.c_str(), nullptr);
+}
+
 void NanovgGraphicsContext::destroy()
 {
     // empty for now

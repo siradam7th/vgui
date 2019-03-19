@@ -10,4 +10,5 @@ namespace vgui
         vec4f borders;
         vec4f borders_color;
     };
+    constexpr Style default_style = { {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f} };
 }
