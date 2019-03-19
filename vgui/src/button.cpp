@@ -9,7 +9,7 @@ Button::Button(vec4f rect, Style style) : m_style(style)
     {
         auto graphics_context = GraphicsDevice::getGraphicsContext();
         // draw button background
-        graphics_context->drawRoundedRect(style.borders.x, rect, style.bg_color);
+        graphics_context->fillRectRounded(style.borders.x, rect, style.bg_color);
     };
     this->bindDrawEvents({ on_draw });
 }

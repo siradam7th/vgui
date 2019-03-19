@@ -11,8 +11,10 @@ namespace vgui
         void setup() override;
         void beginFrame(vec2f canvas_size);
         void endFrame();
-        void drawRoundedRect(float radius, vec4f rect, vec4f color) override;
-        void drawRect(vec4f rect, vec4f color) override;
+        void fillRect(vec4f rect, vec4f color) override;
+        void fillRectRounded(float radius, vec4f rect, vec4f color) override;
+        void strokeRect(vec4f rect, vec4f color) override;
+        void strokeRectRounded(float radius, vec4f rect, vec4f color) override;
         void destroy() override;
     private:
         NVGcontext* s_nvgContext = nullptr;

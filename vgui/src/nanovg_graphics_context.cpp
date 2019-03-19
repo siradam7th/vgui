@@ -42,7 +42,18 @@ void NanovgGraphicsContext::endFrame()
         nvgEndFrame(s_nvgContext);
 }
 
-void NanovgGraphicsContext::drawRoundedRect(float radius, vec4f rect, vec4f color)
+void NanovgGraphicsContext::fillRect(vec4f rect, vec4f color)
+{
+    if (!s_nvgContext)
+        return;
+
+    nvgBeginPath(s_nvgContext);
+    nvgFillColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
+    nvgRect(s_nvgContext, rect.x, rect.y, rect.z, rect.w);
+    nvgFill(s_nvgContext);
+}
+
+void NanovgGraphicsContext::fillRectRounded(float radius, vec4f rect, vec4f color)
 {
     if (!s_nvgContext)
         return;
@@ -53,15 +64,26 @@ void NanovgGraphicsContext::drawRoundedRect(float radius, vec4f rect, vec4f colo
     nvgFill(s_nvgContext);
 }
 
-void NanovgGraphicsContext::drawRect(vec4f rect, vec4f color)
+void NanovgGraphicsContext::strokeRect(vec4f rect, vec4f color)
 {
     if (!s_nvgContext)
         return;
 
     nvgBeginPath(s_nvgContext);
-    nvgFillColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
+    nvgStrokeColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
     nvgRect(s_nvgContext, rect.x, rect.y, rect.z, rect.w);
-    nvgFill(s_nvgContext);
+    nvgStroke(s_nvgContext);
+}
+
+void NanovgGraphicsContext::strokeRectRounded(float radius, vec4f rect, vec4f color)
+{
+    if (!s_nvgContext)
+        return;
+
+    nvgBeginPath(s_nvgContext);
+    nvgStrokeColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
+    nvgRoundedRect(s_nvgContext, rect.x, rect.y, rect.z, rect.w, radius);
+    nvgStroke(s_nvgContext);
 }
 
 void NanovgGraphicsContext::destroy()
