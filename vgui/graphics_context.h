@@ -17,7 +17,8 @@ namespace vgui
         virtual void strokeRect(vec4f rect, vec4f color) = 0;
         virtual void strokeRectRounded(float radius, vec4f rect, vec4f color) = 0;
         virtual bool createFont(const std::string& path, const std::string& name) = 0;
-        virtual void fillFont(const std::string& text, float font_size, const std::string& font_name, vec2f pos, vec4f color, FontStyle font_style) = 0;
+        virtual void fillText(const std::string& text, float font_size, const std::string& font_name, vec2f pos, vec4f color, FontStyle font_style) = 0;
+        virtual vec4f calcTextBounds(const std::string& text, float font_size, const std::string& font_name) = 0;
         virtual void destroy() = 0; // deallocate resources that were allocated in setup() and destroy objects such as context
     };
 }

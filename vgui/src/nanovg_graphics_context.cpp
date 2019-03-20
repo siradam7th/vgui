@@ -88,6 +88,9 @@ void NanovgGraphicsContext::strokeRectRounded(float radius, vec4f rect, vec4f co
 
 bool NanovgGraphicsContext::createFont(const std::string& path, const std::string& name)
 {
+    if (!s_nvgContext)
+        return false;
+
     // note: nanovg keeps track of the loaded fonts and their name internally,so no need to duplicate that
     if (path.empty() || name.empty())
         return false;
@@ -101,13 +104,35 @@ bool NanovgGraphicsContext::createFont(const std::string& path, const std::strin
     return false;
 }
 
-void NanovgGraphicsContext::fillFont(const std::string& text, float font_size, const std::string& font_name, vec2f pos, vec4f color, FontStyle font_style)
+void NanovgGraphicsContext::fillText(const std::string& text, float font_size, const std::string& font_name, vec2f pos, vec4f color, FontStyle font_style)
 {
+    if (!s_nvgContext)
+        return;
+
+    if (text.empty() || font_name.empty() || font_size < 0.0f)
+        return;
+
     nvgFontFace(s_nvgContext, font_name.c_str());
     nvgFontSize(s_nvgContext, font_size);
     nvgTextAlign(s_nvgContext, NVG_ALIGN_TOP | NVG_ALIGN_LEFT);
     nvgFillColor(s_nvgContext, nvgRGBAf(color.x, color.y, color.z, color.w));
-    nvgText(s_nvgContext, pos.x, pos.y + font_size * 0.5f, text.c_str(), nullptr);
+    nvgText(s_nvgContext, pos.x, pos.y, text.c_str(), nullptr);
+}
+
+vec4f NanovgGraphicsContext::calcTextBounds(const std::string& text, float font_size, const std::string& font_name)
+{
+    if (!s_nvgContext)
+        return { 0.0f, 0.0f, 0.0f, 0.0f };
+
+    if (text.empty() || font_name.empty() || font_size < 0.0f)
+        return { 0.0f, 0.0f, 0.0f, 0.0f };
+
+    float bounds[4];
+    nvgFontFace(s_nvgContext, font_name.c_str());
+    nvgFontSize(s_nvgContext, font_size);
+    nvgTextAlign(s_nvgContext, NVG_ALIGN_TOP | NVG_ALIGN_LEFT);
+    nvgTextBounds(s_nvgContext, 0.0f, 0.0f, text.c_str(), nullptr, bounds);
+    return { bounds[0], bounds[1], bounds[2], bounds[3] };
 }
 
 void NanovgGraphicsContext::destroy()
