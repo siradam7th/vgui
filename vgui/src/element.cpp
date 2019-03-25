@@ -15,3 +15,13 @@ const DrawEvents& Element::getDrawEvents() const
 {
     return m_drawevents;
 }
+
+void Element::setRect(vec4f rect)
+{
+    mi_rect = rect;
+}
+
+const vec4f& Element::getRect() const
+{
+    return mi_rect;
+}
