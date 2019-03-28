@@ -1,4 +1,6 @@
 # What is vGUI?
+[![current progress](https://s2.gifyu.com/images/vgui_progressbar.gif)](https://gifyu.com/image/30BO)
+
 **vGUI** is a modern-looking C++ UI library.  
 It uses its own widget implementations instead of relying on platform-specific controls in order to achieve a consistent look.  
 It can be extended using C++ features such as lambdas in order to create new widgets and features.  
