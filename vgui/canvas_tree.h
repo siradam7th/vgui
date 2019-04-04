@@ -20,28 +20,28 @@ namespace vgui
         template<class T>
         friend class CanvasTree;
 
-		// traverse node's children trying to match the id
+        // traverse node's children trying to match the id
         std::shared_ptr<CanvasTreeNode<T>> traverse(uint64_t id);
     };
 
-	template<class T>
-	std::shared_ptr<CanvasTreeNode<T>> CanvasTreeNode<T>::traverse(uint64_t id)
-	{
-		// check if the current node's id matches the id
-		if (this->id == id)
-		{
-			return shared_from_this();
-		}
-		// check the node's children for a match
-		for (auto child : this->children)
-		{
-			if (auto result = child->traverse(id))
-			{
-				return result;
-			}
-		}
-		return {};
-	}
+    template<class T>
+    std::shared_ptr<CanvasTreeNode<T>> CanvasTreeNode<T>::traverse(uint64_t id)
+    {
+        // check if the current node's id matches the id
+        if (this->id == id)
+        {
+            return shared_from_this();
+        }
+        // check the node's children for a match
+        for (auto child : this->children)
+        {
+            if (auto result = child->traverse(id))
+            {
+                return result;
+            }
+        }
+        return {};
+    }
 
     // alias to provide a more readable node type
     template<class T>
@@ -101,13 +101,13 @@ namespace vgui
         if (!m_root && !parent.lock())
         {
             // make the node the root node, and ignore the parent argument
-			// note: ++ operator returns the previous value not the incremented one!
+            // note: ++ operator returns the previous value not the incremented one!
             node->id = s_id++;
             // add an empty parent since it's now the root node, traversing should account for this
             node->parent = {};
             // move the ownership to CanvasTree
             m_root = std::move(node);
-			// return a weak_ptr to the root
+            // return a weak_ptr to the root
             return { m_root };
         }
 
