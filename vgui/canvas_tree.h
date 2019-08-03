@@ -17,7 +17,7 @@ namespace vgui
         std::weak_ptr<CanvasTreeNode<T>> parent;
         std::vector<std::shared_ptr<CanvasTreeNode<T>>> children;
     private:
-        template<class T>
+        template<class>
         friend class CanvasTree;
 
         // traverse node's children trying to match the id
@@ -30,7 +30,7 @@ namespace vgui
         // check if the current node's id matches the id
         if (this->id == id)
         {
-            return shared_from_this();
+            return this->shared_from_this();
         }
         // check the node's children for a match
         for (auto child : this->children)

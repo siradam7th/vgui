@@ -69,27 +69,42 @@ vec4f ProgressBar::calcProgressRect(float value)
 // 'value' is expected to be in the 0-1 range
 std::optional<std::string> ProgressBar::toPercentage(float value)
 {
-    // cap the percentage between 0 and 100
-    if (value >= 1.0f)
-        return { "100%" };
-    if (value <= 0.0f)
-        return { "0%" };
-
-    char char_value[4] = { 0 };
     // multiply by 100 to make it in 0-100 range instead of 0-1 before to_chars() conversion
     // then round to avoid 'result_out_of_range' because the float might convert to more than 3 digits
     auto val = std::round(value * 100.0f);
+    // cap the percentage between 0 and 100
+    if(val < 0 || val == 0)
+        return { "0" };
+    if(val > 100 || val == 100)
+        return { "100" };
+
+#ifdef _MSC_VER
+    char char_value[4] = { 0 };
     auto res = std::to_chars(char_value, char_value + 4, val);
     if (res.ec == std::errc())
     {
-        std::string string_value(char_value);
-        string_value.append("%");
-        return { string_value };
+        return { std::string(char_value) };
     }
     else
     {
         return {};
     }
+#else
+    auto str = std::to_string(val);
+    if(!str.empty())
+    {
+        // calculate how much to sub-string to avoid a string with many zeros
+        // after the actual number in cases like 99 being 99.00000
+        // currently it's capped at 2 positions only, 100 is handled early
+        auto subsize = val > 10 ? 2 : 1;
+        auto sub = str.substr(0, subsize);
+        return { sub };
+    }
+    else
+    {
+        return {};
+    }
+#endif
 }
 
 void ProgressBar::setValue(float value)

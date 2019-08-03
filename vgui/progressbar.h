@@ -3,6 +3,7 @@
 #include "style.h"
 #include "label.h"
 #include <optional>
+#include <string>
 
 namespace vgui
 {

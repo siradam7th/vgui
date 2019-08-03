@@ -27,6 +27,9 @@ workspace "vGUI"
 	-- please update your premake5 to at least (premake-5.0.0-alpha13) for this functionality to work
 	filter {"system:windows", "action:vs*"}
 		systemversion("latest")
+
+	filter "system:linux"
+		toolset "clang"
 		
 	-- These settings will apply to the entire workspace or project (whichever is active)
 	filter {}
