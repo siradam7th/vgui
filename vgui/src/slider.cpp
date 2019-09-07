@@ -6,13 +6,13 @@ using namespace vgui;
 
 Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(value)
 {
-    mi_rect = rect;
+    m_rect = rect;
 
     // defines the knob size to slider size ratio
     constexpr float slider_knob_ratio = 1.5f;
 
     // the knob is a square so the same ratio is applied to both the width and height
-    auto knob_size = vec2f((mi_rect.w * slider_knob_ratio), (mi_rect.w * slider_knob_ratio));
+    auto knob_size = vec2f((m_rect.w * slider_knob_ratio), (m_rect.w * slider_knob_ratio));
     m_knob_rect = calcKnobRect(value, knob_size);
 
     auto on_draw = [this]()
@@ -20,7 +20,7 @@ Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(v
         auto graphics_context = GraphicsDevice::getGraphicsContext();
 
         // draw background
-        graphics_context->fillRect(mi_rect, m_style.bg_color);
+        graphics_context->fillRect(m_rect, m_style.bg_color);
 
         // draw foreground
         graphics_context->fillRectRounded(m_style.borders.x, m_knob_rect, m_style.color);
@@ -28,12 +28,32 @@ Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(v
     this->bindDrawEvents({ on_draw });
 }
 
+void Slider::bindDrawEvents(DrawEvents draw_events)
+{
+    m_draw_events = draw_events;
+}
+
+const DrawEvents& Slider::getDrawEvents()
+{
+    return m_draw_events;
+}
+
+void Slider::setRect(vec4f rect)
+{
+    m_rect = rect;
+}
+
+const vec4f& Slider::getRect()
+{
+    return m_rect;
+}
+
 vec4f Slider::calcKnobRect(float value, vec2f knob_rect_size)
 {
     return vec4f
     {
-        mi_rect.x + ((mi_rect.z - knob_rect_size.y) *  value),
-        mi_rect.y + (mi_rect.w * 0.5f) - (knob_rect_size.y * 0.5f),
+        m_rect.x + ((m_rect.z - knob_rect_size.y) *  value),
+        m_rect.y + (m_rect.w * 0.5f) - (knob_rect_size.y * 0.5f),
         knob_rect_size.x,
         knob_rect_size.y
     };

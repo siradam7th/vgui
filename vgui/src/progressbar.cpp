@@ -9,7 +9,7 @@ using namespace vgui;
 ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string& font_name, vec4f label_color)
     : m_value(value), m_style(style), m_label(std::make_unique<Label>("", font_name, vec2f{ 0.0f, 0.0f }))
 {
-    mi_rect = rect;
+    m_rect = rect;
 
     m_label->setFontName(font_name);
     m_label->getStyle().color = label_color;
@@ -21,15 +21,15 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
     // center label inside the progress rect (X-axis and Y-axis)
     auto label_rect = m_label->getRect();
     vec4f label_new_rect{ 0.0f, 0.0f, label_rect.z, label_rect.w };
-    label_new_rect.x = mi_rect.x + (mi_rect.z * 0.5f) - (label_rect.z * 0.5f);
-    label_new_rect.y = mi_rect.y + (mi_rect.w * 0.5f) - (label_rect.w * 0.5f);
+    label_new_rect.x = m_rect.x + (m_rect.z * 0.5f) - (label_rect.z * 0.5f);
+    label_new_rect.y = m_rect.y + (m_rect.w * 0.5f) - (label_rect.w * 0.5f);
     m_label->setRect(label_new_rect);
 
     auto on_draw = [this]()
     {
         auto graphics_context = GraphicsDevice::getGraphicsContext();
         // draw background
-        graphics_context->fillRect(mi_rect, m_style.bg_color);
+        graphics_context->fillRect(m_rect, m_style.bg_color);
 
         // draw foreground
         graphics_context->fillRect(m_progress_rect, m_style.color);
@@ -44,6 +44,26 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
     this->bindDrawEvents({ on_draw });
 }
 
+void ProgressBar::bindDrawEvents(DrawEvents draw_events)
+{
+    m_draw_events = draw_events;
+}
+
+const DrawEvents& ProgressBar::getDrawEvents()
+{
+    return m_draw_events;
+}
+
+void ProgressBar::setRect(vec4f rect)
+{
+    m_rect = rect;
+}
+
+const vec4f& ProgressBar::getRect()
+{
+    return m_rect;
+}
+
 vec4f ProgressBar::calcProgressRect(float value)
 {
     // TODO: replace with style.padding once implemented
@@ -52,14 +72,14 @@ vec4f ProgressBar::calcProgressRect(float value)
     // std::max the X-axis size calculation to prevent rect overflow and underflow
     auto progress_rect_size = vec2f
     { 
-        std::max(0.0f, mi_rect.z * m_value - padding.x),
-        mi_rect.w - padding.y
+        std::max(0.0f, m_rect.z * m_value - padding.x),
+        m_rect.w - padding.y
     };
 
     return vec4f
     {
-        mi_rect.x + padding.x,
-        mi_rect.y + padding.y,
+        m_rect.x + padding.x,
+        m_rect.y + padding.y,
         std::max(0.0f, progress_rect_size.x - padding.x),
         progress_rect_size.y - padding.y 
     };

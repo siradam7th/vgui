@@ -2,21 +2,17 @@
 #include "math.h"
 #include "uievents.h"
 #include "drawevents.h"
-#include <functional>
+
 namespace vgui
 {
     class Element
     {
     public:
-        void bindUIEvents(UIEvents events);
-        void bindDrawEvents(DrawEvents events);
-        const DrawEvents& getDrawEvents() const;
-        void setRect(vec4f rect);
-        const vec4f& getRect() const;
-    protected:
-        vec4f mi_rect;
-    private:
-        UIEvents m_uievents;
-        DrawEvents m_drawevents;
+        //virtual void bindUIEvents(UIEvents events) = 0;
+        virtual void bindDrawEvents(DrawEvents events) = 0;
+        virtual const DrawEvents& getDrawEvents() = 0;
+        virtual void setRect(vec4f rect) = 0;
+        virtual const vec4f& getRect() = 0;
+        virtual ~Element() = default;
     };
 }
