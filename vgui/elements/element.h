@@ -1,7 +1,7 @@
 #pragma once
-#include "math.h"
-#include "uievents.h"
-#include "drawevents.h"
+#include "vgui/math.h"
+#include "vgui/canvas/uievents.h"
+#include "vgui/canvas/drawevents.h"
 
 namespace vgui
 {

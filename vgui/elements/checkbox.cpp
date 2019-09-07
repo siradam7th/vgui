@@ -1,5 +1,5 @@
-#include "vgui/checkbox.h"
-#include "vgui/graphics_device.h"
+#include "checkbox.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 CheckBox::CheckBox(vec4f rect, bool checked, Style style) : m_checked(checked), m_style(style)

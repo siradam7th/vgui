@@ -1,4 +1,4 @@
-#include "vgui/nanovg_graphics_context.h"
+#include "vgui/graphics/backends/nanovg_graphics_context.h"
 using namespace vgui;
 
 #ifdef VGUI_USE_GL3

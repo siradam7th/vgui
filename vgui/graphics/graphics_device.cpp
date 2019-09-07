@@ -1,6 +1,6 @@
 #pragma once
-#include "vgui/graphics_device.h"
-#include "vgui/nanovg_graphics_context.h"
+#include "graphics_device.h"
+#include "backends/nanovg_graphics_context.h"
 using namespace vgui;
 
 IGraphicsContext* GraphicsDevice::s_graphicsContext = nullptr;

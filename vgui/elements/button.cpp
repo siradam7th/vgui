@@ -1,5 +1,5 @@
-#include "vgui/button.h"
-#include "vgui/graphics_device.h"
+#include "button.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_label(std::move(label))

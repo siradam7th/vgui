@@ -1,6 +1,6 @@
 #pragma once
-#include "math.h"
 #include "font.h"
+#include "vgui/math.h"
 #include <string>
 
 namespace vgui

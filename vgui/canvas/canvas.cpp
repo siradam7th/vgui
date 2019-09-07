@@ -1,6 +1,6 @@
-#include "vgui/canvas.h"
-#include "vgui/graphics_device.h"
-#include "vgui/canvas_tree_node.h"
+#include "canvas.h"
+#include "canvas_tree_node.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 Canvas::Canvas(vec2f size) : m_size(size)

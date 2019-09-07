@@ -1,5 +1,5 @@
-#include "vgui/textbox.h"
-#include "vgui/graphics_device.h"
+#include "textbox.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_label(std::move(label))

@@ -1,14 +1,16 @@
 #pragma once
-#include "common.h"
 #include "element.h"
-#include "style.h"
+#include "label.h"
+#include "vgui/common.h"
+#include "vgui/graphics/style.h"
+#include "vgui/canvas/canvas_tree_node.h"
 
 namespace vgui
 {
-    class Slider : public Element
+    class Button : public Element, public CanvasTreeNode
     {
     public:
-        Slider(vec4f rect, float value, Style style);
+        Button(vec4f rect, UPtr<Label> label, Style style);
 
         // Implement Element interface
         void bindDrawEvents(DrawEvents draw_events) override;
@@ -16,22 +18,14 @@ namespace vgui
         void setRect(vec4f rect) override;
         const vec4f& getRect() override;
 
-        // setters
-        void setValue(float value);
         void setStyle(Style style);
-
-        // getters
-        float getValue() const;
         Style& getStyle();
+        Label* const getLabel();
     private:
         vec4f m_rect;
         DrawEvents m_draw_events;
 
-        // calculate the rect of the knob based on the current slider rect
-        inline vec4f calcKnobRect(float value, vec2f knob_rect_size);
-
-        float m_value;
-        vec4f m_knob_rect;
+        UPtr<Label> m_label;
         Style m_style;
     };
 }

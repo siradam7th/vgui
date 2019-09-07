@@ -1,5 +1,5 @@
-#include "vgui/slider.h"
-#include "vgui/graphics_device.h"
+#include "slider.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 #include <algorithm> // for std::min & std::max

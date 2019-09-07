@@ -1,7 +1,8 @@
 #pragma once
 #include "element.h"
-#include "font.h"
-#include "style.h"
+#include "vgui/graphics/font.h"
+#include "vgui/graphics/style.h"
+
 #include <string>
 
 namespace vgui

@@ -1,5 +1,5 @@
-#include "vgui/label.h"
-#include "vgui/graphics_device.h"
+#include "label.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 Label::Label(const std::string& text, const std::string& font_name, vec2f pos,

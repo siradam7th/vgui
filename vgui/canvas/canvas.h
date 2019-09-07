@@ -1,8 +1,9 @@
 #pragma once
-#include "common.h"
-#include "element.h"
-#include <vector>
 #include "canvas_tree.h"
+#include "vgui/common.h"
+#include "vgui/elements/element.h"
+
+#include <vector>
 
 namespace vgui
 {

@@ -1,14 +1,14 @@
 #pragma once
-#include "common.h"
 #include "element.h"
-#include "style.h"
+#include "vgui/common.h"
+#include "vgui/graphics/style.h"
 
 namespace vgui
 {
-    class CheckBox : public Element
+    class Slider : public Element
     {
     public:
-        CheckBox(vec4f rect, bool checked, Style style);
+        Slider(vec4f rect, float value, Style style);
 
         // Implement Element interface
         void bindDrawEvents(DrawEvents draw_events) override;
@@ -16,16 +16,22 @@ namespace vgui
         void setRect(vec4f rect) override;
         const vec4f& getRect() override;
 
-        bool isChecked();
-        bool toggle();
-
+        // setters
+        void setValue(float value);
         void setStyle(Style style);
+
+        // getters
+        float getValue() const;
         Style& getStyle();
     private:
         vec4f m_rect;
         DrawEvents m_draw_events;
 
-        bool m_checked;
+        // calculate the rect of the knob based on the current slider rect
+        inline vec4f calcKnobRect(float value, vec2f knob_rect_size);
+
+        float m_value;
+        vec4f m_knob_rect;
         Style m_style;
     };
 }

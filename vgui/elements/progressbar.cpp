@@ -1,5 +1,5 @@
-#include "vgui/progressbar.h"
-#include "vgui/graphics_device.h"
+#include "progressbar.h"
+#include "vgui/graphics/graphics_device.h"
 using namespace vgui;
 
 #include <charconv>     // for std::to_chars

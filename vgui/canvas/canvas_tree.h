@@ -1,6 +1,6 @@
 #pragma once
-#include "common.h"
 #include "canvas_tree_node.h"
+#include "vgui/common.h"
 
 namespace vgui
 {

@@ -1,6 +1,7 @@
 #pragma once
-#include "common.h"
-#include "element.h"
+#include "vgui/common.h"
+#include "vgui/elements/element.h"
+
 #include <functional>
 #include <vector>
 
