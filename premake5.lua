@@ -14,13 +14,13 @@ workspace "vGUI"
 	filter "platforms:x64"
 		architecture "x64"
 	
-	filter "platforms:Windows"
+	filter "system:Windows"
 		defines { "PLATFORM_WIN" }
 		
-	filter { "platforms:Windows" and "platforms:x32" }
+	filter { "system:Windows" and "platforms:x32" }
 		defines { "PLATFORM_WIN32" }
 	
-	filter { "platforms:Windows" and "platforms:x64" }
+	filter { "system:Windows" and "platforms:x64" }
 		defines { "PLATFORM_WIN64" }
 		
 	-- No winsdk workaround is needed any more in the latest build of premake5
