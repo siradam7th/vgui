@@ -48,14 +48,16 @@ namespace vgui
             return;
         }
 
-        void setElement(Element* pElement)
-        {
-            m_pElement = pElement;
-        }
-
         Element* const getElement()
         {
             return m_pElement;
+        }
+
+    protected:
+        // don't allow setting the Element ptr from the outside
+        void setElement(Element* pElement)
+        {
+            m_pElement = pElement;
         }
 
     private:
