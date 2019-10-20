@@ -3,8 +3,6 @@
 #include "backends/nanovg_graphics_context.h"
 using namespace vgui;
 
-IGraphicsContext* GraphicsDevice::s_graphicsContext = nullptr;
-
 IGraphicsContext* GraphicsDevice::createGraphicsContext(GraphicsDeviceType device_type)
 {
     switch (device_type)
@@ -18,6 +16,17 @@ IGraphicsContext* GraphicsDevice::createGraphicsContext(GraphicsDeviceType devic
     }
 
     return s_graphicsContext;
+}
+
+void GraphicsDevice::destroyGraphicsContext()
+{
+    if (s_graphicsContext)
+    {
+        // call the destruction function first to release resources
+        // that are used by the graphics context to avoid leaking memory
+        s_graphicsContext->destroy();
+        delete s_graphicsContext;
+    }
 }
 
 IGraphicsContext* GraphicsDevice::getGraphicsContext()

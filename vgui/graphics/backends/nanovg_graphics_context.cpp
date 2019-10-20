@@ -137,5 +137,9 @@ vec4f NanovgGraphicsContext::calcTextBounds(const std::string& text, float font_
 
 void NanovgGraphicsContext::destroy()
 {
-    // empty for now
+#ifdef VGUI_USE_GL3
+    nvgDeleteGL3(s_nvgContext);
+#else
+    nvgDeleteGL2(s_nvgContext);
+#endif
 }

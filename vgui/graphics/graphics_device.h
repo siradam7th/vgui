@@ -12,8 +12,9 @@ namespace vgui
     {
     public:
         static IGraphicsContext* createGraphicsContext(GraphicsDeviceType device_type);
+        static void destroyGraphicsContext();
         static IGraphicsContext* getGraphicsContext();
     private:
-        static IGraphicsContext* s_graphicsContext;
+        inline static IGraphicsContext* s_graphicsContext = nullptr;
     };
 }
