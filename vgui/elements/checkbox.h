@@ -2,10 +2,11 @@
 #include "element.h"
 #include "vgui/common.h"
 #include "vgui/graphics/style.h"
+#include "vgui/canvas/canvas_tree.h"
 
 namespace vgui
 {
-    class CheckBox : public Element
+    class CheckBox : public Element, public CanvasTreeNode
     {
     public:
         CheckBox(vec4f rect, bool checked, Style style);

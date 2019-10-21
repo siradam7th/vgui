@@ -2,13 +2,14 @@
 #include "element.h"
 #include "label.h"
 #include "vgui/graphics/style.h"
+#include "vgui/canvas/canvas_tree_node.h"
 
 #include <optional>
 #include <string>
 
 namespace vgui
 {
-    class ProgressBar : public Element
+    class ProgressBar : public Element, public CanvasTreeNode
     {
     public:
         // Label is drawn correctly only when font_name is a valid loaded font

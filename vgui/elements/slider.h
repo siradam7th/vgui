@@ -2,10 +2,11 @@
 #include "element.h"
 #include "vgui/common.h"
 #include "vgui/graphics/style.h"
+#include "vgui/canvas/canvas_tree_node.h"
 
 namespace vgui
 {
-    class Slider : public Element
+    class Slider : public Element, public CanvasTreeNode
     {
     public:
         Slider(vec4f rect, float value, Style style);

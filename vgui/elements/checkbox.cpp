@@ -4,8 +4,10 @@ using namespace vgui;
 
 CheckBox::CheckBox(vec4f rect, bool checked, Style style) : m_checked(checked), m_style(style)
 {
-    m_rect = rect;
+    // setting the element is required for CanvasTree to function correctly
+    setElement(this);
 
+    m_rect = rect;
     auto on_draw = [this]()
     {
         auto graphics_context = GraphicsDevice::getGraphicsContext();

@@ -2,12 +2,13 @@
 #include "element.h"
 #include "vgui/graphics/font.h"
 #include "vgui/graphics/style.h"
+#include "vgui/canvas/canvas_tree.h"
 
 #include <string>
 
 namespace vgui
 {
-    class Label : public Element
+    class Label : public Element, public CanvasTreeNode
     {
     public:
         Label() = default;

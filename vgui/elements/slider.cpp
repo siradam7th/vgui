@@ -6,6 +6,9 @@ using namespace vgui;
 
 Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(value)
 {
+    // setting the element is required for CanvasTree to function correctly
+    setElement(this);
+
     m_rect = rect;
 
     // defines the knob size to slider size ratio

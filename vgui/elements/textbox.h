@@ -3,10 +3,11 @@
 #include "vgui/common.h"
 #include "vgui/elements/label.h"
 #include "vgui/graphics/style.h"
+#include "vgui/canvas/canvas_tree_node.h"
 
 namespace vgui
 {
-    class TextBox : public Element
+    class TextBox : public Element, public CanvasTreeNode
     {
     public:
         TextBox(vec4f rect, UPtr<Label> label, Style style);

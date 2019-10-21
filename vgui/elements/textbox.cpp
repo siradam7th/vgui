@@ -4,6 +4,9 @@ using namespace vgui;
 
 TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_label(std::move(label))
 {
+    // setting the element is required for CanvasTree to function correctly
+    setElement(this);
+
     m_rect = rect;
     auto label_rect = m_label->getRect();
     // center label inside the textbox (Y-axis only)

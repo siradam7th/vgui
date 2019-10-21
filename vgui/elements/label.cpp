@@ -6,6 +6,9 @@ Label::Label(const std::string& text, const std::string& font_name, vec2f pos,
     float font_size, Style style, FontStyle font_style) :
     m_text(text), m_font_size(font_size), m_font_name(font_name), m_style(style), m_font_style(font_style)
 {
+    // setting the element is required for CanvasTree to function correctly
+    setElement(this);
+
     m_rect = calcTextBounds(pos, text, font_name, font_size);
 
     auto on_draw = [this]()

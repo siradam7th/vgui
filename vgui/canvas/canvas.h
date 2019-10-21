@@ -11,7 +11,6 @@ namespace vgui
     {
     public:
         Canvas(vec2f size);
-        void addElement(SPtr<Element> element);
         void update();
         void draw();
         void resize(vec2f size);
@@ -19,7 +18,6 @@ namespace vgui
 
     private:
         vec2f m_size;
-        std::vector<SPtr<Element>> m_elements;
         vgui::UPtr<CanvasTree> m_tree;
     };
 }

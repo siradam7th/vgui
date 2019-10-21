@@ -8,11 +8,6 @@ Canvas::Canvas(vec2f size) : m_size(size)
     m_tree = std::make_unique<CanvasTree>();
 }
 
-void Canvas::addElement(SPtr<Element> element)
-{
-    m_elements.push_back(element);
-}
-
 void Canvas::update()
 {
 
@@ -22,13 +17,6 @@ void Canvas::draw()
 {
     auto graphics_context = GraphicsDevice::getGraphicsContext();
     graphics_context->beginFrame(m_size);
-    for (auto& element : m_elements)
-    {
-        if (auto& on_draw = element->getDrawEvents().on_draw)
-        {
-            on_draw();
-        }
-    }
 
     auto root = m_tree->getRoot();
     if (root)

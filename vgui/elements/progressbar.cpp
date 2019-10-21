@@ -9,6 +9,9 @@ using namespace vgui;
 ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string& font_name, vec4f label_color)
     : m_value(value), m_style(style), m_label(std::make_unique<Label>("", font_name, vec2f{ 0.0f, 0.0f }))
 {
+    // setting the element is required for CanvasTree to function correctly
+    setElement(this);
+
     m_rect = rect;
 
     m_label->setFontName(font_name);
