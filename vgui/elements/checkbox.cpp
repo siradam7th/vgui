@@ -8,9 +8,8 @@ CheckBox::CheckBox(vec4f rect, bool checked, Style style) : m_checked(checked), 
     setElement(this);
 
     m_rect = rect;
-    auto on_draw = [this]()
+    auto on_draw = [this](IGraphicsContext* graphics_context)
     {
-        auto graphics_context = GraphicsDevice::getGraphicsContext();
         // draw background
         graphics_context->fillRectRounded(m_style.borders.x, m_rect, m_style.bg_color);
 

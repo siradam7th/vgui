@@ -21,7 +21,7 @@ void Canvas::draw()
     auto root = m_tree->getRoot();
     if (root)
     {
-        root->traverse([](CanvasTreeNode* node) -> bool
+        root->traverse([&](CanvasTreeNode* node) -> bool
             {
                 // Note: no need to check if node is nullptr, because traverse doesn't call us when node is nullptr
                 auto const el = node->getElement();
@@ -33,7 +33,7 @@ void Canvas::draw()
                 auto draw_events = el->getDrawEvents();
                 if (auto& on_draw = draw_events.on_draw)
                 {
-                    on_draw();
+                    on_draw(graphics_context);
                 }
                 return false;
             }

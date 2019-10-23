@@ -18,10 +18,8 @@ Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(v
     auto knob_size = vec2f((m_rect.w * slider_knob_ratio), (m_rect.w * slider_knob_ratio));
     m_knob_rect = calcKnobRect(value, knob_size);
 
-    auto on_draw = [this]()
+    auto on_draw = [this](IGraphicsContext* graphics_context)
     {
-        auto graphics_context = GraphicsDevice::getGraphicsContext();
-
         // draw background
         graphics_context->fillRect(m_rect, m_style.bg_color);
 

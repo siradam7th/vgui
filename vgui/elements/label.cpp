@@ -11,9 +11,8 @@ Label::Label(const std::string& text, const std::string& font_name, vec2f pos,
 
     m_rect = calcTextBounds(pos, text, font_name, font_size);
 
-    auto on_draw = [this]()
+    auto on_draw = [this](IGraphicsContext* graphics_context)
     {
-        auto graphics_context = GraphicsDevice::getGraphicsContext();
         graphics_context->fillText(m_text, m_font_size, m_font_name, { m_rect.x, m_rect.y }, m_style.color, m_font_style);
     };
     this->bindDrawEvents({ on_draw });

@@ -28,9 +28,8 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
     label_new_rect.y = m_rect.y + (m_rect.w * 0.5f) - (label_rect.w * 0.5f);
     m_label->setRect(label_new_rect);
 
-    auto on_draw = [this]()
+    auto on_draw = [this](IGraphicsContext* graphics_context)
     {
-        auto graphics_context = GraphicsDevice::getGraphicsContext();
         // draw background
         graphics_context->fillRect(m_rect, m_style.bg_color);
 
@@ -40,7 +39,7 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
         // draw label
         if (auto& label_on_draw = m_label->getDrawEvents().on_draw)
         {
-            label_on_draw();
+            label_on_draw(graphics_context);
         }
 
     };

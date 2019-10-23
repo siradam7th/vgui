@@ -15,16 +15,15 @@ Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_l
     label_new_rect.y = m_rect.w * 0.5f - (label_rect.w * 0.5f) + m_rect.y;
     m_label->setRect(label_new_rect);
 
-    auto on_draw = [this]()
+    auto on_draw = [this](IGraphicsContext* graphics_context)
     {
-        auto graphics_context = GraphicsDevice::getGraphicsContext();
         // draw button background
         graphics_context->fillRectRounded(m_style.borders.x, m_rect, m_style.bg_color);
 
         // draw foreground
         if (auto& on_draw = m_label->getDrawEvents().on_draw)
         {
-            on_draw();
+            on_draw(graphics_context);
         }
     };
     this->bindDrawEvents({ on_draw });
