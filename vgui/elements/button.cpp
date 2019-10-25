@@ -26,7 +26,17 @@ Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_l
             on_draw(graphics_context);
         }
     };
-    this->bindDrawEvents({ on_draw });
+
+    auto on_update = [this]()
+    {
+        auto label_rect = m_label->getRect();
+        // center label inside the button (X-axis and Y-axis)
+        auto label_new_rect = vec4f{ m_rect.x, m_rect.y, label_rect.z, label_rect.w };
+        label_new_rect.x = m_rect.z * 0.5f - (label_rect.z * 0.5f) + m_rect.x;
+        label_new_rect.y = m_rect.w * 0.5f - (label_rect.w * 0.5f) + m_rect.y;
+        m_label->setRect(label_new_rect);
+    };
+    this->bindDrawEvents({ on_draw, on_update });
 }
 
 void Button::bindDrawEvents(DrawEvents draw_events)

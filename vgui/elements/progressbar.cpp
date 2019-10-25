@@ -41,9 +41,19 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
         {
             label_on_draw(graphics_context);
         }
-
     };
-    this->bindDrawEvents({ on_draw });
+
+    auto on_update = [this]()
+    {
+        // center label inside the progress rect (X-axis and Y-axis)
+        auto label_rect = m_label->getRect();
+        vec4f label_new_rect{ 0.0f, 0.0f, label_rect.z, label_rect.w };
+        label_new_rect.x = m_rect.x + (m_rect.z * 0.5f) - (label_rect.z * 0.5f);
+        label_new_rect.y = m_rect.y + (m_rect.w * 0.5f) - (label_rect.w * 0.5f);
+        m_label->setRect(label_new_rect);
+    };
+
+    this->bindDrawEvents({ on_draw, on_update });
 }
 
 void ProgressBar::bindDrawEvents(DrawEvents draw_events)
