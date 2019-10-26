@@ -154,7 +154,13 @@ void ProgressBar::setValue(float value)
         // recalculate the progress rect
         m_progress_rect = calcProgressRect(current_val);
         // convert value to a percentage in a string format
-        m_label->setText(toPercentage(current_val).value_or("%"));
+        m_label->setText(toPercentage(current_val).value_or("%") + "%");
+        // issue an update so the element recalculates the position of the label
+        // which might have changed.
+        if (const auto& on_update = m_draw_events.on_update)
+        {
+            on_update();
+        }
     }
 }
 
