@@ -1,6 +1,9 @@
 #include "textbox.h"
 #include "vgui/graphics/graphics_device.h"
+#include "vgui/elements/utility.h"
 using namespace vgui;
+
+constexpr float label_left_padding = 5.0f;
 
 TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_label(std::move(label))
 {
@@ -8,13 +11,6 @@ TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m
     setElement(this);
 
     m_rect = rect;
-    auto label_rect = m_label->getRect();
-    // center label inside the textbox (Y-axis only)
-    auto label_new_rect = vec4f{ m_rect.x, m_rect.y, label_rect.z, label_rect.w };
-    label_new_rect.x = m_rect.x + 5.0f; //TODO: replace this value with Style.padding once implemented
-    label_new_rect.y = m_rect.w * 0.5f - (label_rect.w * 0.5f) + m_rect.y;
-    m_label->setRect(label_new_rect);
-
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
         // draw background
@@ -29,13 +25,14 @@ TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m
 
     auto on_update = [this]()
     {
-        // center label inside the textbox (Y-axis only)
-        auto label_rect = m_label->getRect();
-        auto label_new_rect = vec4f{ m_rect.x, m_rect.y, label_rect.z, label_rect.w };
-        label_new_rect.x = m_rect.x + 5.0f;
-        label_new_rect.y = m_rect.w * 0.5f - (label_rect.w * 0.5f) + m_rect.y;
+        // center label inside the textbox (Y-axis only) and apply padding to the X-axis
+        auto label_new_rect = utils::findCenterRectNoOverflow(m_rect, m_label->getRect());
+        label_new_rect.x = m_rect.x + label_left_padding;
         m_label->setRect(label_new_rect);
     };
+
+    // issue the first update, this is important and mainly to avoid duplicating code
+    on_update();
     this->bindDrawEvents({ on_draw, on_update });
 }
 

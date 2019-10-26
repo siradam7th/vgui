@@ -4,18 +4,28 @@ using namespace vgui;
 
 Label::Label(const std::string& text, const std::string& font_name, vec2f pos,
     float font_size, Style style, FontStyle font_style) :
-    m_text(text), m_font_size(font_size), m_font_name(font_name), m_style(style), m_font_style(font_style)
+    m_text(text), m_font_size(font_size), m_font_name(font_name),
+    m_style(style), m_font_style(font_style)
 {
     // setting the element is required for CanvasTree to function correctly
     setElement(this);
 
-    m_rect = calcTextBounds(pos, text, font_name, font_size);
-
+    // since we don't know how much space the text takes yet, we set it to zero
+    m_rect = vec4f{ pos.x, pos.y, 0.0f, 0.0f };
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
         graphics_context->fillText(m_text, m_font_size, m_font_name, { m_rect.x, m_rect.y }, m_style.color, m_font_style);
     };
-    this->bindDrawEvents({ on_draw });
+
+    auto on_update = [this]()
+    {
+        // calculate the rect of the text
+        m_rect = calcTextBounds({ m_rect.x, m_rect.y }, m_text, m_font_name, m_font_size);
+    };
+
+    // issue the first update, this is important and mainly to avoid duplicating code
+    on_update();
+    this->bindDrawEvents({ on_draw, on_update });
 }
 
 void Label::bindDrawEvents(DrawEvents draw_events)

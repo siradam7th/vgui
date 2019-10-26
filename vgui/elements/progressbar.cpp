@@ -1,5 +1,6 @@
 #include "progressbar.h"
 #include "vgui/graphics/graphics_device.h"
+#include "vgui/elements/utility.h"
 using namespace vgui;
 
 #include <charconv>     // for std::to_chars
@@ -21,13 +22,6 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
     // calculate the progress rect
     m_progress_rect = calcProgressRect(value);
 
-    // center label inside the progress rect (X-axis and Y-axis)
-    auto label_rect = m_label->getRect();
-    vec4f label_new_rect{ 0.0f, 0.0f, label_rect.z, label_rect.w };
-    label_new_rect.x = m_rect.x + (m_rect.z * 0.5f) - (label_rect.z * 0.5f);
-    label_new_rect.y = m_rect.y + (m_rect.w * 0.5f) - (label_rect.w * 0.5f);
-    m_label->setRect(label_new_rect);
-
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
         // draw background
@@ -45,14 +39,11 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
 
     auto on_update = [this]()
     {
-        // center label inside the progress rect (X-axis and Y-axis)
-        auto label_rect = m_label->getRect();
-        vec4f label_new_rect{ 0.0f, 0.0f, label_rect.z, label_rect.w };
-        label_new_rect.x = m_rect.x + (m_rect.z * 0.5f) - (label_rect.z * 0.5f);
-        label_new_rect.y = m_rect.y + (m_rect.w * 0.5f) - (label_rect.w * 0.5f);
-        m_label->setRect(label_new_rect);
+        m_label->setRect(utils::findCenterRectNoOverflow(m_rect, m_label->getRect()));
     };
 
+    // issue the first update, this is important and mainly to avoid duplicating code
+    on_update();
     this->bindDrawEvents({ on_draw, on_update });
 }
 

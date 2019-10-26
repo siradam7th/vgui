@@ -1,5 +1,6 @@
 #include "button.h"
 #include "vgui/graphics/graphics_device.h"
+#include "vgui/elements/utility.h"
 using namespace vgui;
 
 Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_label(std::move(label))
@@ -8,13 +9,6 @@ Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_l
     setElement(this);
 
     m_rect = rect;
-    auto label_rect = m_label->getRect();
-    // center label inside the button (X-axis and Y-axis)
-    auto label_new_rect = vec4f{ m_rect.x, m_rect.y, label_rect.z, label_rect.w };
-    label_new_rect.x = m_rect.z * 0.5f - (label_rect.z * 0.5f) + m_rect.x;
-    label_new_rect.y = m_rect.w * 0.5f - (label_rect.w * 0.5f) + m_rect.y;
-    m_label->setRect(label_new_rect);
-
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
         // draw button background
@@ -29,13 +23,12 @@ Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_l
 
     auto on_update = [this]()
     {
-        auto label_rect = m_label->getRect();
-        // center label inside the button (X-axis and Y-axis)
-        auto label_new_rect = vec4f{ m_rect.x, m_rect.y, label_rect.z, label_rect.w };
-        label_new_rect.x = m_rect.z * 0.5f - (label_rect.z * 0.5f) + m_rect.x;
-        label_new_rect.y = m_rect.w * 0.5f - (label_rect.w * 0.5f) + m_rect.y;
-        m_label->setRect(label_new_rect);
+        // center the label inside the button
+        m_label->setRect(utils::findCenterRectNoOverflow(m_rect, m_label->getRect()));
     };
+
+    // issue the first update, this is important and mainly to avoid duplicating code
+    on_update();
     this->bindDrawEvents({ on_draw, on_update });
 }
 

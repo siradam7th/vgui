@@ -4,20 +4,15 @@ using namespace vgui;
 
 #include <algorithm> // for std::min & std::max
 
+// defines the knob size to slider size ratio
+constexpr float slider_knob_ratio = 1.5f;
+
 Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(value)
 {
     // setting the element is required for CanvasTree to function correctly
     setElement(this);
 
     m_rect = rect;
-
-    // defines the knob size to slider size ratio
-    constexpr float slider_knob_ratio = 1.5f;
-
-    // the knob is a square so the same ratio is applied to both the width and height
-    auto knob_size = vec2f((m_rect.w * slider_knob_ratio), (m_rect.w * slider_knob_ratio));
-    m_knob_rect = calcKnobRect(value, knob_size);
-
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
         // draw background
@@ -26,7 +21,16 @@ Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(v
         // draw foreground
         graphics_context->fillRectRounded(m_style.borders.x, m_knob_rect, m_style.color);
     };
-    this->bindDrawEvents({ on_draw });
+
+    auto on_update = [this]()
+    {
+        auto knob_size = vec2f((m_rect.w * slider_knob_ratio), (m_rect.w * slider_knob_ratio));
+        m_knob_rect = calcKnobRect(m_value, { knob_size.x, knob_size.y });
+    };
+
+    // issue the first update, this is important and mainly to avoid duplicating code
+    on_update();
+    this->bindDrawEvents({ on_draw, on_update });
 }
 
 void Slider::bindDrawEvents(DrawEvents draw_events)
@@ -70,8 +74,12 @@ void Slider::setValue(float value)
     {
         // update internal value
         m_value = current_val;
-        // recalculate the knob rect
-        m_knob_rect = calcKnobRect(current_val, { m_knob_rect.z, m_knob_rect.w });
+
+        // issue an update to recalculate knob size
+        if (const auto on_update = m_draw_events.on_update)
+        {
+            on_update();
+        }
     }
 }
 

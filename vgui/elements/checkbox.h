@@ -24,6 +24,7 @@ namespace vgui
         Style& getStyle();
     private:
         vec4f m_rect;
+        vec4f m_checkmark_rect;
         DrawEvents m_draw_events;
 
         bool m_checked;
