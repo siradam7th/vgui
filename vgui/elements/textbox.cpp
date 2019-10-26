@@ -46,6 +46,16 @@ const DrawEvents& TextBox::getDrawEvents()
     return m_draw_events;
 }
 
+void TextBox::bindUIEvents(UIEvents ui_events)
+{
+    m_ui_events = ui_events;
+}
+
+const UIEvents& TextBox::getUIEvents()
+{
+    return m_ui_events;
+}
+
 void TextBox::setRect(vec4f rect)
 {
     m_rect = rect;

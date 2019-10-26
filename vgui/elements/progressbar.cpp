@@ -57,6 +57,16 @@ const DrawEvents& ProgressBar::getDrawEvents()
     return m_draw_events;
 }
 
+void ProgressBar::bindUIEvents(UIEvents ui_events)
+{
+    m_ui_events = ui_events;
+}
+
+const UIEvents& ProgressBar::getUIEvents()
+{
+    return m_ui_events;
+}
+
 void ProgressBar::setRect(vec4f rect)
 {
     m_rect = rect;

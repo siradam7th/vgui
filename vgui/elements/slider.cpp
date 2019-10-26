@@ -43,6 +43,16 @@ const DrawEvents& Slider::getDrawEvents()
     return m_draw_events;
 }
 
+void Slider::bindUIEvents(UIEvents ui_events)
+{
+    m_ui_events = ui_events;
+}
+
+const UIEvents& Slider::getUIEvents()
+{
+    return m_ui_events;
+}
+
 void Slider::setRect(vec4f rect)
 {
     m_rect = rect;

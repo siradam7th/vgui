@@ -8,9 +8,35 @@ Canvas::Canvas(vec2f size, float pixel_ratio) : m_size(size), m_pixel_ratio(pixe
     m_tree = std::make_unique<CanvasTree>();
 }
 
-void Canvas::update()
+void Canvas::update(vec2f mouse_position)
 {
+    auto root = m_tree->getRoot();
+    if (root)
+    {
+        root->traverse([&](CanvasTreeNode * node) -> bool
+            {
+                // Note: no need to check if node is nullptr, because traverse doesn't call us when node is nullptr
+                auto const el = node->getElement();
+                if (el == nullptr)
+                {
+                    return false;
+                }
 
+                auto const rect = el->getRect();
+                if (vgui::intersect_rect_mouse(
+                    mouse_position.x, mouse_position.y,
+                    rect.x, rect.y, rect.z, rect.w))
+                {
+                    const auto ui_events = el->getUIEvents();
+                    if (const auto& on_mouse_hover = ui_events.on_mouse_hover)
+                    {
+                        on_mouse_hover();
+                    }
+                }
+                return false;
+            }
+        );
+    }
 }
 
 void Canvas::draw()

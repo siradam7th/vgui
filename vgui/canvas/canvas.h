@@ -11,7 +11,7 @@ namespace vgui
     {
     public:
         Canvas(vec2f size, float pixel_ratio);
-        void update();
+        void update(vec2f mouse_position);
         void draw();
         void resize(vec2f size, float pixel_ratio);
         CanvasTree* getTree();

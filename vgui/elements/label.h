@@ -16,6 +16,8 @@ namespace vgui
         // Implement Element interface
         void bindDrawEvents(DrawEvents draw_events) override;
         const DrawEvents& getDrawEvents() override;
+        void bindUIEvents(UIEvents ui_events) override;
+        const UIEvents& getUIEvents() override;
         void setRect(vec4f rect) override;
         const vec4f& getRect() override;
 
@@ -37,6 +39,7 @@ namespace vgui
     private:
         vec4f m_rect;
         DrawEvents m_draw_events;
+        UIEvents m_ui_events;
 
         // calculate text bounds
         vec4f calcTextBounds(const vec2f& pos, const std::string& text, const std::string& font_name, float font_size);

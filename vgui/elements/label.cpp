@@ -38,6 +38,16 @@ const DrawEvents& Label::getDrawEvents()
     return m_draw_events;
 }
 
+void Label::bindUIEvents(UIEvents ui_events)
+{
+    m_ui_events = ui_events;
+}
+
+const UIEvents& Label::getUIEvents()
+{
+    return m_ui_events;
+}
+
 void Label::setRect(vec4f rect)
 {
     m_rect = rect;

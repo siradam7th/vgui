@@ -42,6 +42,16 @@ const DrawEvents& Button::getDrawEvents()
     return m_draw_events;
 }
 
+void Button::bindUIEvents(UIEvents ui_events)
+{
+    m_ui_events = ui_events;
+}
+
+const UIEvents& Button::getUIEvents()
+{
+    return m_ui_events;
+}
+
 void Button::setRect(vec4f rect)
 {
     m_rect = rect;

@@ -50,6 +50,16 @@ const DrawEvents& CheckBox::getDrawEvents()
     return m_draw_events;
 }
 
+void CheckBox::bindUIEvents(UIEvents ui_events)
+{
+    m_ui_events = ui_events;
+}
+
+const UIEvents& CheckBox::getUIEvents()
+{
+    return m_ui_events;
+}
+
 void CheckBox::setRect(vec4f rect)
 {
     m_rect = rect;
