@@ -30,10 +30,10 @@ void NanovgGraphicsContext::setup()
     // empty for now
 }
 
-void NanovgGraphicsContext::beginFrame(vec2f canvas_size)
+void NanovgGraphicsContext::beginFrame(vec2f canvas_size, float pixel_ratio)
 {
     if (s_nvgContext)
-        nvgBeginFrame(s_nvgContext, canvas_size.x, canvas_size.y, 1.0f);
+        nvgBeginFrame(s_nvgContext, canvas_size.x, canvas_size.y, pixel_ratio);
 }
 
 void NanovgGraphicsContext::endFrame()

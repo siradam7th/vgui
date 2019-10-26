@@ -10,7 +10,7 @@ namespace vgui
     public:
         virtual bool init() = 0; // initialize (nanovg, skia, own implementation...)
         virtual void setup() = 0; // load default resources such as fonts
-        virtual void beginFrame(vec2f canvas_size) = 0; // called by the canvas at the start of a drawing frame
+        virtual void beginFrame(vec2f canvas_size, float pixel_ratio) = 0; // called by the canvas at the start of a drawing frame
         virtual void endFrame() = 0; // called by the canvas at the end of a drawing frame
         virtual void fillRect(vec4f rect, vec4f color) = 0;
         virtual void fillRectRounded(float radius, vec4f rect, vec4f color) = 0;

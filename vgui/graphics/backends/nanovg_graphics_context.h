@@ -9,7 +9,7 @@ namespace vgui
     public:
         bool init() override;
         void setup() override;
-        void beginFrame(vec2f canvas_size);
+        void beginFrame(vec2f canvas_size, float pixel_ratio);
         void endFrame();
         void fillRect(vec4f rect, vec4f color) override;
         void fillRectRounded(float radius, vec4f rect, vec4f color) override;
