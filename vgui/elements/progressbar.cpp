@@ -24,6 +24,9 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
 
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
+        // draw borders
+        graphics_context->fillRectRounded(m_style.borders_radius, m_borders_rect, m_style.borders_color);
+
         // draw background
         graphics_context->fillRect(m_rect, m_style.bg_color);
 
@@ -39,7 +42,12 @@ ProgressBar::ProgressBar(vec4f rect, float value, Style style, const std::string
 
     auto on_update = [this]()
     {
+        // center the label
         m_label->setRect(utils::findCenterRectNoOverflow(m_rect, m_label->getRect()));
+
+        // calculate the borders rect
+        // mapped as x: right, y: top, z: left, w: bottom 
+        m_borders_rect = utils::findPaddedRect(m_rect, m_style.borders);
     };
 
     // issue the first update, this is important and mainly to avoid duplicating code

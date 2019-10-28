@@ -13,8 +13,11 @@ CheckBox::CheckBox(vec4f rect, bool checked, Style style) : m_checked(checked), 
     m_rect = rect;
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
+        // draw borders
+        graphics_context->fillRectRounded(m_style.borders_radius, m_borders_rect, m_style.borders_color);
+
         // draw background
-        graphics_context->fillRectRounded(m_style.borders.x, m_rect, m_style.bg_color);
+        graphics_context->fillRectRounded(m_style.borders_radius, m_rect, m_style.bg_color);
 
         // draw foreground
         if (m_checked)
@@ -33,6 +36,10 @@ CheckBox::CheckBox(vec4f rect, bool checked, Style style) : m_checked(checked), 
                 m_rect.z * checkmark_checkbox_ratio,
                 m_rect.w * checkmark_checkbox_ratio
             });
+
+        // calculate the borders rect
+        // mapped as x: right, y: top, z: left, w: bottom 
+        m_borders_rect = utils::findPaddedRect(m_rect, m_style.borders);
     };
 
     // issue the first update, this is important and mainly to avoid duplicating code

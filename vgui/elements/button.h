@@ -25,6 +25,7 @@ namespace vgui
         Label* const getLabel();
     private:
         vec4f m_rect;
+        vec4f m_borders_rect;
         DrawEvents m_draw_events;
         UIEvents m_ui_events;
 

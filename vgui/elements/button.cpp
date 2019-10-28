@@ -11,8 +11,11 @@ Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_l
     m_rect = rect;
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
-        // draw button background
-        graphics_context->fillRectRounded(m_style.borders.x, m_rect, m_style.bg_color);
+        // draw borders
+        graphics_context->fillRectRounded(m_style.borders_radius, m_borders_rect, m_style.borders_color);
+
+        // draw background
+        graphics_context->fillRectRounded(m_style.borders_radius, m_rect, m_style.bg_color);
 
         // draw foreground
         if (auto& on_draw = m_label->getDrawEvents().on_draw)
@@ -25,6 +28,10 @@ Button::Button(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m_l
     {
         // center the label inside the button
         m_label->setRect(utils::findCenterRectNoOverflow(m_rect, m_label->getRect()));
+
+        // calculate the borders rect
+        // mapped as x: right, y: top, z: left, w: bottom 
+        m_borders_rect = utils::findPaddedRect(m_rect, m_style.borders);
     };
 
     // issue the first update, this is important and mainly to avoid duplicating code

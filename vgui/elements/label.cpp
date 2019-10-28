@@ -1,5 +1,6 @@
 #include "label.h"
 #include "vgui/graphics/graphics_device.h"
+#include "vgui/elements/utility.h"
 using namespace vgui;
 
 Label::Label(const std::string& text, const std::string& font_name, vec2f pos,
@@ -14,6 +15,10 @@ Label::Label(const std::string& text, const std::string& font_name, vec2f pos,
     m_rect = vec4f{ pos.x, pos.y, 0.0f, 0.0f };
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
+        // draw borders
+        graphics_context->fillRectRounded(m_style.borders_radius, m_borders_rect, m_style.borders_color);
+
+        // draw text
         graphics_context->fillText(m_text, m_font_size, m_font_name, { m_rect.x, m_rect.y }, m_style.color, m_font_style);
     };
 
@@ -21,6 +26,10 @@ Label::Label(const std::string& text, const std::string& font_name, vec2f pos,
     {
         // calculate the rect of the text
         m_rect = calcTextBounds({ m_rect.x, m_rect.y }, m_text, m_font_name, m_font_size);
+
+        // calculate the borders rect
+        // mapped as x: right, y: top, z: left, w: bottom 
+        m_borders_rect = utils::findPaddedRect(m_rect, m_style.borders);
     };
 
     // issue the first update, this is important and mainly to avoid duplicating code

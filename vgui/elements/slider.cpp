@@ -1,5 +1,6 @@
 #include "slider.h"
 #include "vgui/graphics/graphics_device.h"
+#include "vgui/elements/utility.h"
 using namespace vgui;
 
 #include <algorithm> // for std::min & std::max
@@ -15,6 +16,9 @@ Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(v
     m_rect = rect;
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
+        // draw borders
+        graphics_context->fillRectRounded(m_style.borders_radius, m_borders_rect, m_style.borders_color);
+
         // draw background
         graphics_context->fillRect(m_rect, m_style.bg_color);
 
@@ -24,8 +28,13 @@ Slider::Slider(vec4f rect, float value, Style style) : m_style(style), m_value(v
 
     auto on_update = [this]()
     {
+        // calculate knob rect
         auto knob_size = vec2f((m_rect.w * slider_knob_ratio), (m_rect.w * slider_knob_ratio));
         m_knob_rect = calcKnobRect(m_value, { knob_size.x, knob_size.y });
+
+        // calculate the borders rect
+        // mapped as x: right, y: top, z: left, w: bottom 
+        m_borders_rect = utils::findPaddedRect(m_rect, m_style.borders);
     };
 
     // issue the first update, this is important and mainly to avoid duplicating code

@@ -13,6 +13,9 @@ TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m
     m_rect = rect;
     auto on_draw = [this](IGraphicsContext* graphics_context)
     {
+        // draw borders
+        graphics_context->fillRectRounded(m_style.borders_radius, m_borders_rect, m_style.borders_color);
+
         // draw background
         graphics_context->fillRect(m_rect, m_style.bg_color);
 
@@ -29,6 +32,10 @@ TextBox::TextBox(vec4f rect, UPtr<Label> label, Style style) : m_style(style), m
         auto label_new_rect = utils::findCenterRectNoOverflow(m_rect, m_label->getRect());
         label_new_rect.x = m_rect.x + label_left_padding;
         m_label->setRect(label_new_rect);
+
+        // calculate the borders rect
+        // mapped as x: right, y: top, z: left, w: bottom 
+        m_borders_rect = utils::findPaddedRect(m_rect, m_style.borders);
     };
 
     // issue the first update, this is important and mainly to avoid duplicating code
