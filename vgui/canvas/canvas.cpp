@@ -8,7 +8,7 @@ Canvas::Canvas(vec2f size, float pixel_ratio) : m_size(size), m_pixel_ratio(pixe
     m_tree = std::make_unique<CanvasTree>();
 }
 
-void Canvas::update(vec2f mouse_position)
+void Canvas::update(vec2i mouse_position)
 {
     auto root = m_tree->getRoot();
     if (root)
@@ -24,13 +24,13 @@ void Canvas::update(vec2f mouse_position)
 
                 auto const rect = el->getRect();
                 if (vgui::intersect_rect_mouse(
-                    mouse_position.x, mouse_position.y,
+                    (float)mouse_position.x, (float)mouse_position.y,
                     rect.x, rect.y, rect.z, rect.w))
                 {
                     const auto ui_events = el->getUIEvents();
-                    if (const auto& on_mouse_hover = ui_events.on_mouse_hover)
+                    if (const auto& on_mouse_event = ui_events.on_mouse_event)
                     {
-                        on_mouse_hover();
+                        on_mouse_event(MOUSE_EVENT_HOVER, mouse_position.x, mouse_position.y);
                     }
                 }
                 return false;
