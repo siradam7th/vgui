@@ -19,7 +19,7 @@ namespace vgui
 	
     constexpr Style default_style = {
         { 1.0f, 1.0f, 1.0f, 1.0f }, // color
-        { 0.0f, 0.0f, 0.0f, 0.0f }, // bg_color
+        { 0.0f, 0.0f, 0.0f, 1.0f }, // bg_color
         { 0.0f, 0.0f, 0.0f, 0.0f }, // borders
         { 0.0f, 0.0f, 0.0f, 0.0f }, // borders_color
         0.0f //border_radius

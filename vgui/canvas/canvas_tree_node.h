@@ -13,9 +13,12 @@ namespace vgui
         CanvasTreeNode() = default;
         CanvasTreeNode(Element* element) : m_pElement(element) {}
 
+        // insert a node as a child of this node
         bool insert(SPtr<CanvasTreeNode> node)
         {
-            if (node == nullptr)
+            // check if it is nullptr, or if we are inserting a node into itself
+            // because that causes endless recursion (we don't want that, causes stack overflow)
+            if (node == nullptr || this == node.get())
             {
                 return false;
             }
@@ -35,7 +38,7 @@ namespace vgui
             {
                 return;
             }
-            for (auto child : node->m_children)
+            for (auto& child : node->m_children)
             {
                 walkCanvasTreeNode(child.get(), func);
             }
