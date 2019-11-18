@@ -27,6 +27,15 @@ namespace vgui
             return true;
         }
 
+        // remove all child nodes and deallocate their memory
+        void remove_all()
+        {
+            // removes all vector items (doesn't release memory)
+            m_children.clear();
+            // shrink vector to release memory that was allocated
+            m_children.shrink_to_fit();
+        }
+
         static void walkCanvasTreeNode(CanvasTreeNode* node,
             std::function<bool(CanvasTreeNode*)> func)
         {
