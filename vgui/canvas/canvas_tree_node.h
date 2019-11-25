@@ -7,7 +7,7 @@
 
 namespace vgui
 {
-    class CanvasTreeNode
+    class CanvasTreeNode : public std::enable_shared_from_this<CanvasTreeNode>
     {
     public:
         CanvasTreeNode() = default;
@@ -23,8 +23,17 @@ namespace vgui
                 return false;
             }
 
+            // since we are adding this node as our child, we are the parent
+            node->m_parent = shared_from_this();
             m_children.push_back(node);
             return true;
+        }
+
+        // return the parent of this node
+        // NOTE: the parent node can be empty or nullptr
+        SPtr<CanvasTreeNode> getParent()
+        {
+            return m_parent.lock();
         }
 
         // remove all child nodes and deallocate their memory
@@ -73,6 +82,7 @@ namespace vgui
         }
 
     private:
+        WPtr<CanvasTreeNode> m_parent = {};
         Element* m_pElement = nullptr;
         std::vector<SPtr<CanvasTreeNode>> m_children;
     };
